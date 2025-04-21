@@ -5,7 +5,6 @@ import {
   GraduationCap,
   LayoutDashboard,
   PenBox,
-  StarHalfIcon,
   StarIcon,
 } from "lucide-react";
 import Image from "next/image";

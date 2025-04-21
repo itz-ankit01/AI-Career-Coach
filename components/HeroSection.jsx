@@ -49,7 +49,7 @@ function HeroSection() {
                     Get Started
                 </Button>
             </Link>
-            <Link href="https://www.youtube.com/watch?v=X464tZQi6Is&list=RDMMX464tZQi6Is&start_radio=1">
+            <Link href="https://www.youtube.com/watch?v=X464tZQi6Is&list=RDMMX464tZQi6Is&start_radio=1" target='_blank'>
                 <Button className='px-8'size='lg' variant={'outline'}>
                     Watch Demo
                 </Button>
