@@ -12,7 +12,7 @@ export default function NotFound() {
       </p>
 
       <Link href='/'>
-        <Button>
+        <Button className={'cursor-pointer'}>
             Return to Home
         </Button>
       </Link>

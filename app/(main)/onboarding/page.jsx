@@ -1,12 +1,19 @@
+import { getOnboardingStatus } from '@/actions/user';
+import { industries } from '@/data/industries'
 import React from 'react'
+import OnboardingForm from './_components/onboarding-from';
+import { redirect } from 'next/navigation';
 
-function OnboardingPage() {
+const OnboardingPage = async () =>{
+  const { isOnboarded } = await getOnboardingStatus();
+
+  if(isOnboarded) {
+    redirect('/dashboard')
+  }
   return (
-    <div>
-      
-      <h1>Welcome to the Onboarding Page</h1>
-      <p>Please follow the steps to complete your onboarding process.</p>
-    </div>
+    <main>
+      <OnboardingForm industries={industries}/>
+    </main>
   )
 }
 
