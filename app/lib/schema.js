@@ -5,7 +5,7 @@ export const onboardingSchema = z.object({
     required_error: "please select an industry",
   }),
   subIndustry: z.string({
-    required_error: "please select a  speciliazation",
+    required_error: "please select a speciliazation",
   }),
   bio: z.string().max(500).optional(),
   experience: z

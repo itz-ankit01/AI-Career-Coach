@@ -23,87 +23,83 @@ export async function updateUser(data) {
     const result = await db.$transaction(
       async (tx) => {
         // find if the industry exists
-
         let industryInsight = await tx.industryInsight.findUnique({
           where: {
             industry: data.industry,
           },
         });
-        // If the induatry does not exist, create it with default values - will replace it with ai later
+
+        // If the industry does not exist, create it with default values
         if (!industryInsight) {
           industryInsight = await tx.industryInsight.create({
             data: {
               industry: data.industry,
-              salaryRanges: [],
+              salaryRange: [],
               growthRate: 0,
-              demandLevel: "Medium",
+              demandLevel: "MEDIUM",
               topSkills: [],
-              MarketOutlook: "Neutral",
+              marketOutlook: "NEUTRAL",
               keyTrends: [],
               recommendedSkills: [],
+              recommendedCourses: [], // Added this as it's required by the schema
               nextUpdate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
             },
           });
         }
-        // update the user with the new industry
 
+        // update the user with the industry ID instead of the industry name
         const updatedUser = await tx.user.update({
           where: {
             id: user.id,
           },
           data: {
-            industry: data.industry,
+            industry: data.industry, // Use the ID instead of the industry name
             experience: data.experience,
-            bio : data.bio,
-            skills : data.skills,
+            bio: data.bio,
+            skills: data.skills,
           },
         });
 
-        return { updatedUser, industryInsight }
+        return { updatedUser, industryInsight };
       },
       {
-        timeout: 10000, // 10 seconds
+        timeout: 10000,
       }
     );
 
-    return result.user;
+    return { success: true, ...result };
   } catch (error) {
     console.error("Error updating user:", error);
-    throw new Error("Failed to update user");
+    throw new Error("Failed to update user: " + error.message);
   }
 }
 
+export async function getOnboardingStatus() {
+  const { userId } = await auth();
 
-export async function getOnboardingStatus(){
-    const { userId } = await auth();
+  if (!userId) {
+    throw new Error("User not authenticated");
+  }
 
-    if (!userId) {
-        throw new Error("User not authenticated");
+  try {
+    const user = await db.user.findUnique({
+      where: {
+        clerkUserId: userId,
+      },
+      select: {
+        industry: true,
+      },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
     }
 
-    try {
-        const user = await db.user.findUnique({
-            where: {
-                clerkUserId: userId,
-            },
-            select : {
-                industry : true,
-            }
-        });
-
-
-
-        if (!user) {
-            throw new Error("User not found");
-        }
-
-        return {
-            isOnboarded: !!user?.industry,
-        }
-    } catch (error) {
-        console.error("Error getting onboarding status:", error.message);
-        throw new Error("Failed to get onboarding status");
-        
-    }
-
+    return {
+      isOnboarded: !!user?.industry,
+    };
+  } catch (error) {
+    console.error("Error getting onboarding status:", error.message);
+    throw new Error("Failed to get onboarding status");
+  }
 }
