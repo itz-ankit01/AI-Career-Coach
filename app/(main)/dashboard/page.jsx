@@ -1,18 +1,22 @@
+
+import { getIndustryInsights } from '@/actions/dashboard';
 import { getOnboardingStatus } from '@/actions/user';
 import { redirect } from 'next/navigation';
-import React from 'react'
+import DashboardView from './_components/dashboard-view';
 
 const IndustryInsightsPage = async () => {
   const { isOnboarded } = await getOnboardingStatus();
-
+  
+  console.log('onboarded ', isOnboarded)
+  
   if(!isOnboarded) {
     redirect('/onboarding');
   }
+  const insights = await getIndustryInsights();
   return (
-    <div>
-      <h1>Industry Insights</h1>
-      <p>Here you can find the latest insights and trends in the industry.</p>
-    </div>
+      <div className='container mx-auto'>
+        <DashboardView  insights={insights}/>
+      </div>
   )
 }
 
