@@ -4862,6 +4862,7 @@ export namespace Prisma {
     jobDescription: string | null
     companyName: string | null
     jobTitle: string | null
+    status: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -4873,6 +4874,7 @@ export namespace Prisma {
     jobDescription: string | null
     companyName: string | null
     jobTitle: string | null
+    status: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -4884,6 +4886,7 @@ export namespace Prisma {
     jobDescription: number
     companyName: number
     jobTitle: number
+    status: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -4897,6 +4900,7 @@ export namespace Prisma {
     jobDescription?: true
     companyName?: true
     jobTitle?: true
+    status?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -4908,6 +4912,7 @@ export namespace Prisma {
     jobDescription?: true
     companyName?: true
     jobTitle?: true
+    status?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -4919,6 +4924,7 @@ export namespace Prisma {
     jobDescription?: true
     companyName?: true
     jobTitle?: true
+    status?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -5003,6 +5009,7 @@ export namespace Prisma {
     jobDescription: string | null
     companyName: string | null
     jobTitle: string | null
+    status: string
     createdAt: Date
     updatedAt: Date
     _count: CoverLetterCountAggregateOutputType | null
@@ -5031,6 +5038,7 @@ export namespace Prisma {
     jobDescription?: boolean
     companyName?: boolean
     jobTitle?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -5043,6 +5051,7 @@ export namespace Prisma {
     jobDescription?: boolean
     companyName?: boolean
     jobTitle?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -5055,6 +5064,7 @@ export namespace Prisma {
     jobDescription?: boolean
     companyName?: boolean
     jobTitle?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -5067,11 +5077,12 @@ export namespace Prisma {
     jobDescription?: boolean
     companyName?: boolean
     jobTitle?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type CoverLetterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "content" | "jobDescription" | "companyName" | "jobTitle" | "createdAt" | "updatedAt", ExtArgs["result"]["coverLetter"]>
+  export type CoverLetterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "content" | "jobDescription" | "companyName" | "jobTitle" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["coverLetter"]>
   export type CoverLetterInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -5094,6 +5105,7 @@ export namespace Prisma {
       jobDescription: string | null
       companyName: string | null
       jobTitle: string | null
+      status: string
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["coverLetter"]>
@@ -5526,6 +5538,7 @@ export namespace Prisma {
     readonly jobDescription: FieldRef<"CoverLetter", 'String'>
     readonly companyName: FieldRef<"CoverLetter", 'String'>
     readonly jobTitle: FieldRef<"CoverLetter", 'String'>
+    readonly status: FieldRef<"CoverLetter", 'String'>
     readonly createdAt: FieldRef<"CoverLetter", 'DateTime'>
     readonly updatedAt: FieldRef<"CoverLetter", 'DateTime'>
   }
@@ -7208,6 +7221,7 @@ export namespace Prisma {
     jobDescription: 'jobDescription',
     companyName: 'companyName',
     jobTitle: 'jobTitle',
+    status: 'status',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -7610,6 +7624,7 @@ export namespace Prisma {
     jobDescription?: StringNullableFilter<"CoverLetter"> | string | null
     companyName?: StringNullableFilter<"CoverLetter"> | string | null
     jobTitle?: StringNullableFilter<"CoverLetter"> | string | null
+    status?: StringFilter<"CoverLetter"> | string
     createdAt?: DateTimeFilter<"CoverLetter"> | Date | string
     updatedAt?: DateTimeFilter<"CoverLetter"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -7622,6 +7637,7 @@ export namespace Prisma {
     jobDescription?: SortOrderInput | SortOrder
     companyName?: SortOrderInput | SortOrder
     jobTitle?: SortOrderInput | SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -7637,6 +7653,7 @@ export namespace Prisma {
     jobDescription?: StringNullableFilter<"CoverLetter"> | string | null
     companyName?: StringNullableFilter<"CoverLetter"> | string | null
     jobTitle?: StringNullableFilter<"CoverLetter"> | string | null
+    status?: StringFilter<"CoverLetter"> | string
     createdAt?: DateTimeFilter<"CoverLetter"> | Date | string
     updatedAt?: DateTimeFilter<"CoverLetter"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -7649,6 +7666,7 @@ export namespace Prisma {
     jobDescription?: SortOrderInput | SortOrder
     companyName?: SortOrderInput | SortOrder
     jobTitle?: SortOrderInput | SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: CoverLetterCountOrderByAggregateInput
@@ -7666,6 +7684,7 @@ export namespace Prisma {
     jobDescription?: StringNullableWithAggregatesFilter<"CoverLetter"> | string | null
     companyName?: StringNullableWithAggregatesFilter<"CoverLetter"> | string | null
     jobTitle?: StringNullableWithAggregatesFilter<"CoverLetter"> | string | null
+    status?: StringWithAggregatesFilter<"CoverLetter"> | string
     createdAt?: DateTimeWithAggregatesFilter<"CoverLetter"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"CoverLetter"> | Date | string
   }
@@ -8032,6 +8051,7 @@ export namespace Prisma {
     jobDescription?: string | null
     companyName?: string | null
     jobTitle?: string | null
+    status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutCoverLettersInput
@@ -8044,6 +8064,7 @@ export namespace Prisma {
     jobDescription?: string | null
     companyName?: string | null
     jobTitle?: string | null
+    status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -8054,6 +8075,7 @@ export namespace Prisma {
     jobDescription?: NullableStringFieldUpdateOperationsInput | string | null
     companyName?: NullableStringFieldUpdateOperationsInput | string | null
     jobTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutCoverLettersNestedInput
@@ -8066,6 +8088,7 @@ export namespace Prisma {
     jobDescription?: NullableStringFieldUpdateOperationsInput | string | null
     companyName?: NullableStringFieldUpdateOperationsInput | string | null
     jobTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -8077,6 +8100,7 @@ export namespace Prisma {
     jobDescription?: string | null
     companyName?: string | null
     jobTitle?: string | null
+    status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -8087,6 +8111,7 @@ export namespace Prisma {
     jobDescription?: NullableStringFieldUpdateOperationsInput | string | null
     companyName?: NullableStringFieldUpdateOperationsInput | string | null
     jobTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -8098,6 +8123,7 @@ export namespace Prisma {
     jobDescription?: NullableStringFieldUpdateOperationsInput | string | null
     companyName?: NullableStringFieldUpdateOperationsInput | string | null
     jobTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -8591,6 +8617,7 @@ export namespace Prisma {
     jobDescription?: SortOrder
     companyName?: SortOrder
     jobTitle?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -8602,6 +8629,7 @@ export namespace Prisma {
     jobDescription?: SortOrder
     companyName?: SortOrder
     jobTitle?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -8613,6 +8641,7 @@ export namespace Prisma {
     jobDescription?: SortOrder
     companyName?: SortOrder
     jobTitle?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -9398,6 +9427,7 @@ export namespace Prisma {
     jobDescription?: string | null
     companyName?: string | null
     jobTitle?: string | null
+    status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -9408,6 +9438,7 @@ export namespace Prisma {
     jobDescription?: string | null
     companyName?: string | null
     jobTitle?: string | null
+    status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -9552,6 +9583,7 @@ export namespace Prisma {
     jobDescription?: StringNullableFilter<"CoverLetter"> | string | null
     companyName?: StringNullableFilter<"CoverLetter"> | string | null
     jobTitle?: StringNullableFilter<"CoverLetter"> | string | null
+    status?: StringFilter<"CoverLetter"> | string
     createdAt?: DateTimeFilter<"CoverLetter"> | Date | string
     updatedAt?: DateTimeFilter<"CoverLetter"> | Date | string
   }
@@ -9887,6 +9919,7 @@ export namespace Prisma {
     jobDescription?: string | null
     companyName?: string | null
     jobTitle?: string | null
+    status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -9927,6 +9960,7 @@ export namespace Prisma {
     jobDescription?: NullableStringFieldUpdateOperationsInput | string | null
     companyName?: NullableStringFieldUpdateOperationsInput | string | null
     jobTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9937,6 +9971,7 @@ export namespace Prisma {
     jobDescription?: NullableStringFieldUpdateOperationsInput | string | null
     companyName?: NullableStringFieldUpdateOperationsInput | string | null
     jobTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9947,6 +9982,7 @@ export namespace Prisma {
     jobDescription?: NullableStringFieldUpdateOperationsInput | string | null
     companyName?: NullableStringFieldUpdateOperationsInput | string | null
     jobTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

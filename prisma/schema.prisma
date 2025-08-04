@@ -66,6 +66,7 @@ model CoverLetter {
   jobDescription String? // Job description for the cover letter
   companyName    String? // Company name for the cover letter
   jobTitle       String? // position title for the cover letter
+  status          String    @default("draft") // draft, completed
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 

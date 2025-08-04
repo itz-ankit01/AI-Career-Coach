@@ -67,7 +67,7 @@ export default function RootLayout({ children }) {
               <Header />
               
               {/* Main Content */}
-              <main className="flex-1 relative">
+              <main className="flex-1 relative min-h-[450px]">
                 <div className="relative z-10">
                   {children}
                 </div>
