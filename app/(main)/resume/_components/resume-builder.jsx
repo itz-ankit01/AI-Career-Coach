@@ -26,7 +26,6 @@ import { resumeSchema } from "@/app/lib/schema";
 import { pdf } from "@react-pdf/renderer";
 import ResumePDF from "./resume-pdf";
 
-
 export default function ResumeBuilder({ initialContent }) {
   const [activeTab, setActiveTab] = useState("edit");
   const [previewContent, setPreviewContent] = useState(initialContent);
@@ -151,262 +150,368 @@ export default function ResumeBuilder({ initialContent }) {
   };
 
   return (
-    <div data-color-mode="light" className="space-y-4">
-      <div className="flex flex-col md:flex-row justify-between items-center gap-2">
-        <h1 className="font-bold gradient-title text-5xl md:text-6xl">
-          Resume Builder
-        </h1>
-        <div className="space-x-2">
-          <Button
-            variant="destructive"
-            onClick={handleSubmit(onSubmit)}
-            disabled={isSaving}
-          >
-            {isSaving ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Saving...
-              </>
-            ) : (
-              <>
-                <Save className="h-4 w-4" />
-                Save
-              </>
-            )}
-          </Button>
-          <Button onClick={generatePDF} disabled={isGenerating}>
-            {isGenerating ? (
-              <>
-                <Loader2 className="h-4 w-4 animate-spin" />
-                Generating PDF...
-              </>
-            ) : (
-              <>
-                <Download className="h-4 w-4" />
-                Download PDF
-              </>
-            )}
-          </Button>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-slate-900 relative overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-3/4 left-1/2 w-96 h-96 bg-pink-500/5 rounded-full blur-3xl animate-pulse delay-2000"></div>
       </div>
 
-      <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList>
-          <TabsTrigger value="edit">Form</TabsTrigger>
-          <TabsTrigger value="preview">Markdown</TabsTrigger>
-        </TabsList>
+      {/* Grid Background */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.1) 1px, transparent 0)`,
+          backgroundSize: '20px 20px'
+        }}></div>
+      </div>
 
-        <TabsContent value="edit">
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-            {/* Contact Information */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium">Contact Information</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 border rounded-lg bg-muted/50">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Email</label>
-                  <Input
-                    {...register("contactInfo.email")}
-                    type="email"
-                    placeholder="your@email.com"
-                    error={errors.contactInfo?.email}
-                  />
-                  {errors.contactInfo?.email && (
-                    <p className="text-sm text-red-500">
-                      {errors.contactInfo.email.message}
-                    </p>
-                  )}
+      <div data-color-mode="dark" className="relative space-y-8 p-6 md:p-8">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="text-center md:text-left">
+            <h1 className="font-bold text-5xl md:text-6xl bg-gradient-to-r from-white via-blue-200 to-purple-300 bg-clip-text text-transparent leading-tight">
+              Resume Builder
+            </h1>
+            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto md:mx-0 mt-4 rounded-full shadow-lg"></div>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Button
+              onClick={handleSubmit(onSubmit)}
+              disabled={isSaving}
+              className="h-12 px-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105 border-0"
+            >
+              {isSaving ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Saving...
+                </>
+              ) : (
+                <>
+                  <Save className="mr-2 h-4 w-4" />
+                  Save Resume
+                </>
+              )}
+            </Button>
+            
+            <Button 
+              onClick={generatePDF} 
+              disabled={isGenerating}
+              className="h-12 px-6 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-green-500/25 transition-all duration-300 hover:scale-105 border-0"
+            >
+              {isGenerating ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Generating...
+                </>
+              ) : (
+                <>
+                  <Download className="mr-2 h-4 w-4" />
+                  Download PDF
+                </>
+              )}
+            </Button>
+          </div>
+        </div>
+
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="bg-gray-800/50 border border-gray-700 rounded-xl p-1 backdrop-blur-sm">
+            <TabsTrigger 
+              value="edit" 
+              className="rounded-lg px-6 py-3 text-gray-300 data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-purple-600 data-[state=active]:text-white font-medium transition-all duration-300"
+            >
+              <Edit className="mr-2 h-4 w-4" />
+              Form Builder
+            </TabsTrigger>
+            <TabsTrigger 
+              value="preview" 
+              className="rounded-lg px-6 py-3 text-gray-300 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-600 data-[state=active]:to-pink-600 data-[state=active]:text-white font-medium transition-all duration-300"
+            >
+              <Monitor className="mr-2 h-4 w-4" />
+              Preview
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="edit" className="mt-8">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-10">
+              {/* Contact Information */}
+              <div className="space-y-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-4 h-4 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full shadow-lg"></div>
+                  <h3 className="text-2xl font-bold text-white">Contact Information</h3>
                 </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Mobile Number</label>
-                  <Input
-                    {...register("contactInfo.mobile")}
-                    type="tel"
-                    placeholder="+1 234 567 8900"
-                  />
-                  {errors.contactInfo?.mobile && (
-                    <p className="text-sm text-red-500">
-                      {errors.contactInfo.mobile.message}
-                    </p>
-                  )}
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-8 border-2 border-gray-700 rounded-2xl bg-gray-800/50 backdrop-blur-sm hover:border-gray-600 transition-colors duration-300">
+                  <div className="space-y-3">
+                    <label className="text-sm font-semibold text-gray-200 flex items-center gap-2">
+                      <span className="w-2 h-2 bg-blue-400 rounded-full"></span>
+                      Email Address
+                    </label>
+                    <Input
+                      {...register("contactInfo.email")}
+                      type="email"
+                      placeholder="your@email.com"
+                      className="h-12 bg-gray-700/50 border-2 border-gray-600 hover:border-blue-400 focus:border-blue-500 transition-all duration-300 rounded-xl text-white placeholder:text-gray-400"
+                      error={errors.contactInfo?.email}
+                    />
+                    {errors.contactInfo?.email && (
+                      <p className="text-sm text-red-400 flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 bg-red-400 rounded-full"></span>
+                        {errors.contactInfo.email.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-3">
+                    <label className="text-sm font-semibold text-gray-200 flex items-center gap-2">
+                      <span className="w-2 h-2 bg-green-400 rounded-full"></span>
+                      Mobile Number
+                    </label>
+                    <Input
+                      {...register("contactInfo.mobile")}
+                      type="tel"
+                      placeholder="+1 234 567 8900"
+                      className="h-12 bg-gray-700/50 border-2 border-gray-600 hover:border-green-400 focus:border-green-500 transition-all duration-300 rounded-xl text-white placeholder:text-gray-400"
+                    />
+                    {errors.contactInfo?.mobile && (
+                      <p className="text-sm text-red-400 flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 bg-red-400 rounded-full"></span>
+                        {errors.contactInfo.mobile.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-3">
+                    <label className="text-sm font-semibold text-gray-200 flex items-center gap-2">
+                      <span className="w-2 h-2 bg-purple-400 rounded-full"></span>
+                      LinkedIn Profile
+                    </label>
+                    <Input
+                      {...register("contactInfo.linkedin")}
+                      type="url"
+                      placeholder="https://linkedin.com/in/your-profile"
+                      className="h-12 bg-gray-700/50 border-2 border-gray-600 hover:border-purple-400 focus:border-purple-500 transition-all duration-300 rounded-xl text-white placeholder:text-gray-400"
+                    />
+                    {errors.contactInfo?.linkedin && (
+                      <p className="text-sm text-red-400 flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 bg-red-400 rounded-full"></span>
+                        {errors.contactInfo.linkedin.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-3">
+                    <label className="text-sm font-semibold text-gray-200 flex items-center gap-2">
+                      <span className="w-2 h-2 bg-cyan-400 rounded-full"></span>
+                      Twitter/X Profile
+                    </label>
+                    <Input
+                      {...register("contactInfo.twitter")}
+                      type="url"
+                      placeholder="https://twitter.com/your-handle"
+                      className="h-12 bg-gray-700/50 border-2 border-gray-600 hover:border-cyan-400 focus:border-cyan-500 transition-all duration-300 rounded-xl text-white placeholder:text-gray-400"
+                    />
+                    {errors.contactInfo?.twitter && (
+                      <p className="text-sm text-red-400 flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 bg-red-400 rounded-full"></span>
+                        {errors.contactInfo.twitter.message}
+                      </p>
+                    )}
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">LinkedIn URL</label>
-                  <Input
-                    {...register("contactInfo.linkedin")}
-                    type="url"
-                    placeholder="https://linkedin.com/in/your-profile"
-                  />
-                  {errors.contactInfo?.linkedin && (
-                    <p className="text-sm text-red-500">
-                      {errors.contactInfo.linkedin.message}
-                    </p>
-                  )}
+              </div>
+
+              {/* Professional Summary */}
+              <div className="space-y-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-4 h-4 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full shadow-lg"></div>
+                  <h3 className="text-2xl font-bold text-white">Professional Summary</h3>
                 </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">
-                    Twitter/X Profile
-                  </label>
-                  <Input
-                    {...register("contactInfo.twitter")}
-                    type="url"
-                    placeholder="https://twitter.com/your-handle"
+                
+                <div className="p-6 border-2 border-gray-700 rounded-2xl bg-gray-800/50 backdrop-blur-sm hover:border-gray-600 transition-colors duration-300">
+                  <Controller
+                    name="summary"
+                    control={control}
+                    render={({ field }) => (
+                      <Textarea
+                        {...field}
+                        className="h-36 bg-gray-700/50 border-2 border-gray-600 hover:border-orange-400 focus:border-orange-500 transition-all duration-300 rounded-xl text-white placeholder:text-gray-400 resize-none"
+                        placeholder="Write a compelling professional summary that highlights your key achievements and career objectives..."
+                        error={errors.summary}
+                      />
+                    )}
                   />
-                  {errors.contactInfo?.twitter && (
-                    <p className="text-sm text-red-500">
-                      {errors.contactInfo.twitter.message}
+                  {errors.summary && (
+                    <p className="text-sm text-red-400 flex items-center gap-2 mt-3">
+                      <span className="w-1.5 h-1.5 bg-red-400 rounded-full"></span>
+                      {errors.summary.message}
                     </p>
                   )}
                 </div>
               </div>
-            </div>
 
-            {/* Summary */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium">Professional Summary</h3>
-              <Controller
-                name="summary"
-                control={control}
-                render={({ field }) => (
-                  <Textarea
-                    {...field}
-                    className="h-32"
-                    placeholder="Write a compelling professional summary..."
-                    error={errors.summary}
+              {/* Skills */}
+              <div className="space-y-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-4 h-4 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full shadow-lg"></div>
+                  <h3 className="text-2xl font-bold text-white">Skills & Technologies</h3>
+                </div>
+                
+                <div className="p-6 border-2 border-gray-700 rounded-2xl bg-gray-800/50 backdrop-blur-sm hover:border-gray-600 transition-colors duration-300">
+                  <Controller
+                    name="skills"
+                    control={control}
+                    render={({ field }) => (
+                      <Textarea
+                        {...field}
+                        className="h-36 bg-gray-700/50 border-2 border-gray-600 hover:border-emerald-400 focus:border-emerald-500 transition-all duration-300 rounded-xl text-white placeholder:text-gray-400 resize-none"
+                        placeholder="List your technical skills, programming languages, frameworks, and tools..."
+                        error={errors.skills}
+                      />
+                    )}
                   />
-                )}
-              />
-              {errors.summary && (
-                <p className="text-sm text-red-500">{errors.summary.message}</p>
-              )}
-            </div>
+                  {errors.skills && (
+                    <p className="text-sm text-red-400 flex items-center gap-2 mt-3">
+                      <span className="w-1.5 h-1.5 bg-red-400 rounded-full"></span>
+                      {errors.skills.message}
+                    </p>
+                  )}
+                </div>
+              </div>
 
-            {/* Skills */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium">Skills</h3>
-              <Controller
-                name="skills"
-                control={control}
-                render={({ field }) => (
-                  <Textarea
-                    {...field}
-                    className="h-32"
-                    placeholder="List your key skills..."
-                    error={errors.skills}
+              {/* Work Experience */}
+              <div className="space-y-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-4 h-4 bg-gradient-to-r from-indigo-400 to-purple-400 rounded-full shadow-lg"></div>
+                  <h3 className="text-2xl font-bold text-white">Work Experience</h3>
+                </div>
+                
+                <div className="p-6 border-2 border-gray-700 rounded-2xl bg-gray-800/50 backdrop-blur-sm hover:border-gray-600 transition-colors duration-300">
+                  <Controller
+                    name="experience"
+                    control={control}
+                    render={({ field }) => (
+                      <EntryForm
+                        type="Experience"
+                        entries={field.value}
+                        onChange={field.onChange}
+                      />
+                    )}
                   />
-                )}
-              />
-              {errors.skills && (
-                <p className="text-sm text-red-500">{errors.skills.message}</p>
-              )}
-            </div>
+                  {errors.experience && (
+                    <p className="text-sm text-red-400 flex items-center gap-2 mt-3">
+                      <span className="w-1.5 h-1.5 bg-red-400 rounded-full"></span>
+                      {errors.experience.message}
+                    </p>
+                  )}
+                </div>
+              </div>
 
-            {/* Experience */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium">Work Experience</h3>
-              <Controller
-                name="experience"
-                control={control}
-                render={({ field }) => (
-                  <EntryForm
-                    type="Experience"
-                    entries={field.value}
-                    onChange={field.onChange}
+              {/* Education */}
+              <div className="space-y-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-4 h-4 bg-gradient-to-r from-pink-400 to-rose-400 rounded-full shadow-lg"></div>
+                  <h3 className="text-2xl font-bold text-white">Education</h3>
+                </div>
+                
+                <div className="p-6 border-2 border-gray-700 rounded-2xl bg-gray-800/50 backdrop-blur-sm hover:border-gray-600 transition-colors duration-300">
+                  <Controller
+                    name="education"
+                    control={control}
+                    render={({ field }) => (
+                      <EntryForm
+                        type="Education"
+                        entries={field.value}
+                        onChange={field.onChange}
+                      />
+                    )}
                   />
-                )}
-              />
-              {errors.experience && (
-                <p className="text-sm text-red-500">
-                  {errors.experience.message}
-                </p>
-              )}
-            </div>
+                  {errors.education && (
+                    <p className="text-sm text-red-400 flex items-center gap-2 mt-3">
+                      <span className="w-1.5 h-1.5 bg-red-400 rounded-full"></span>
+                      {errors.education.message}
+                    </p>
+                  )}
+                </div>
+              </div>
 
-            {/* Education */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium">Education</h3>
-              <Controller
-                name="education"
-                control={control}
-                render={({ field }) => (
-                  <EntryForm
-                    type="Education"
-                    entries={field.value}
-                    onChange={field.onChange}
+              {/* Projects */}
+              <div className="space-y-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-4 h-4 bg-gradient-to-r from-violet-400 to-fuchsia-400 rounded-full shadow-lg"></div>
+                  <h3 className="text-2xl font-bold text-white">Projects</h3>
+                </div>
+                
+                <div className="p-6 border-2 border-gray-700 rounded-2xl bg-gray-800/50 backdrop-blur-sm hover:border-gray-600 transition-colors duration-300">
+                  <Controller
+                    name="projects"
+                    control={control}
+                    render={({ field }) => (
+                      <EntryForm
+                        type="Project"
+                        entries={field.value}
+                        onChange={field.onChange}
+                      />
+                    )}
                   />
-                )}
+                  {errors.projects && (
+                    <p className="text-sm text-red-400 flex items-center gap-2 mt-3">
+                      <span className="w-1.5 h-1.5 bg-red-400 rounded-full"></span>
+                      {errors.projects.message}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </form>
+          </TabsContent>
+
+          <TabsContent value="preview" className="mt-8">
+            {activeTab === "preview" && (
+              <div className="mb-6 flex flex-col sm:flex-row gap-4">
+                <Button
+                  variant="outline"
+                  type="button"
+                  onClick={() =>
+                    setResumeMode(resumeMode === "preview" ? "edit" : "preview")
+                  }
+                  className="h-12 px-6 bg-gray-800/50 border-2 border-gray-600 hover:border-purple-400 hover:bg-purple-500/10 text-gray-200 hover:text-white rounded-xl transition-all duration-300"
+                >
+                  {resumeMode === "preview" ? (
+                    <>
+                      <Edit className="mr-2 h-4 w-4" />
+                      Edit Markdown
+                    </>
+                  ) : (
+                    <>
+                      <Monitor className="mr-2 h-4 w-4" />
+                      Show Preview
+                    </>
+                  )}
+                </Button>
+              </div>
+            )}
+
+            {activeTab === "preview" && resumeMode !== "preview" && (
+              <div className="flex p-4 gap-3 items-center border-2 border-yellow-500/50 bg-yellow-500/10 text-yellow-300 rounded-xl mb-6 backdrop-blur-sm">
+                <AlertTriangle className="h-5 w-5 flex-shrink-0" />
+                <span className="text-sm">
+                  You will lose edited markdown if you update the form data.
+                </span>
+              </div>
+            )}
+            
+            <div className="border-2 border-gray-700 rounded-2xl overflow-hidden bg-gray-800/30 backdrop-blur-sm">
+              <MDEditor
+                value={previewContent}
+                onChange={setPreviewContent}
+                height={800}
+                preview={resumeMode}
+                data-color-mode="dark"
               />
-              {errors.education && (
-                <p className="text-sm text-red-500">
-                  {errors.education.message}
-                </p>
-              )}
             </div>
-
-            {/* Projects */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium">Projects</h3>
-              <Controller
-                name="projects"
-                control={control}
-                render={({ field }) => (
-                  <EntryForm
-                    type="Project"
-                    entries={field.value}
-                    onChange={field.onChange}
-                  />
-                )}
-              />
-              {errors.projects && (
-                <p className="text-sm text-red-500">
-                  {errors.projects.message}
-                </p>
-              )}
-            </div>
-          </form>
-        </TabsContent>
-
-        <TabsContent value="preview">
-          {activeTab === "preview" && (
-            <Button
-              variant="link"
-              type="button"
-              className="mb-2"
-              onClick={() =>
-                setResumeMode(resumeMode === "preview" ? "edit" : "preview")
-              }
-            >
-              {resumeMode === "preview" ? (
-                <>
-                  <Edit className="h-4 w-4" />
-                  Edit Resume
-                </>
-              ) : (
-                <>
-                  <Monitor className="h-4 w-4" />
-                  Show Preview
-                </>
-              )}
-            </Button>
-          )}
-
-          {activeTab === "preview" && resumeMode !== "preview" && (
-            <div className="flex p-3 gap-2 items-center border-2 border-yellow-600 text-yellow-600 rounded mb-2">
-              <AlertTriangle className="h-5 w-5" />
-              <span className="text-sm">
-                You will lose editied markdown if you update the form data.
-              </span>
-            </div>
-          )}
-          <div className="border rounded-lg">
-            <MDEditor
-              value={previewContent}
-              onChange={setPreviewContent}
-              height={800}
-              preview={resumeMode}
-            />
-          </div>
-        </TabsContent>
-      </Tabs>
+          </TabsContent>
+        </Tabs>
+      </div>
     </div>
   );
 }
